@@ -1,0 +1,217 @@
+/* Streak Card */
+.streak-card {
+  animation: slideUp 0.4s ease;
+}
+
+/* Hero */
+.streak-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  padding: var(--space-xl) 0;
+  margin-bottom: var(--space-lg);
+}
+
+.streak-flame {
+  color: var(--accent-amber);
+  animation: pulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4));
+}
+
+.streak-info {
+  text-align: center;
+}
+
+.streak-count {
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent-amber) 0%, var(--accent-rose) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.streak-label {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* Streak Calendar */
+.streak-calendar {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: var(--space-xl);
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.streak-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.streak-day-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.streak-day-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+
+.streak-day.active .streak-day-circle {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(244, 63, 94, 0.2) 100%);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: var(--accent-amber);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+}
+
+/* Stats */
+.streak-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2xl);
+  padding: var(--space-lg) 0;
+  margin-bottom: var(--space-lg);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.streak-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.streak-stat-value {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.streak-stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Section Title */
+.streak-section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--accent-amber-light);
+  margin-bottom: var(--space-md);
+}
+
+.streak-section-title.locked-title {
+  color: var(--text-muted);
+  margin-top: var(--space-lg);
+}
+
+/* Badges Grid */
+.streak-badges {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-sm);
+}
+
+.streak-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+
+.streak-badge.unlocked {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.streak-badge.unlocked:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+  border-color: var(--border-medium);
+}
+
+.streak-badge.locked {
+  opacity: 0.4;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.streak-badge-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.streak-badge-icon.locked {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+}
+
+.streak-badge-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.streak-badge-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.streak-badge-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .streak-calendar {
+    gap: 3px;
+    padding: var(--space-sm);
+  }
+
+  .streak-day-circle {
+    width: 22px;
+    height: 22px;
+  }
+
+  .streak-count {
+    font-size: 3rem;
+  }
+
+  .streak-badges {
+    grid-template-columns: 1fr;
+  }
+}

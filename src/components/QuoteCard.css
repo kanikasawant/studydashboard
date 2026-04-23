@@ -1,0 +1,79 @@
+/* Quote Card */
+.quote-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-lg) var(--space-xl);
+  background: var(--gradient-card);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  overflow: hidden;
+  animation: fadeIn 0.6s ease;
+}
+
+.quote-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+}
+
+.quote-decoration {
+  flex-shrink: 0;
+  color: var(--accent-violet);
+  opacity: 0.3;
+}
+
+.quote-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.quote-text {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-style: italic;
+  margin-bottom: var(--space-sm);
+}
+
+.quote-author {
+  font-size: var(--text-sm);
+  color: var(--accent-violet-light);
+  font-weight: 500;
+}
+
+.quote-refresh {
+  flex-shrink: 0;
+}
+
+.quote-refresh:hover {
+  color: var(--accent-violet-light) !important;
+}
+
+.quote-refresh:hover svg {
+  animation: spin 0.5s ease;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 600px) {
+  .quote-card {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-lg);
+  }
+
+  .quote-text {
+    font-size: var(--text-base);
+  }
+}

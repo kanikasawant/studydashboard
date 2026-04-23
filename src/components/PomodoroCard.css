@@ -1,0 +1,161 @@
+/* Pomodoro Card */
+.pomodoro-card {
+  animation: slideUp 0.4s ease;
+}
+
+/* Mode Tabs */
+.pomo-modes {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-xl);
+}
+
+.pomo-mode-btn {
+  flex: 1;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pomo-mode-btn:hover {
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.pomo-mode-btn.active {
+  background: rgba(124, 58, 237, 0.15);
+  color: var(--accent-violet-light);
+}
+
+.pomo-mode-btn[data-mode="shortBreak"].active,
+.pomo-mode-btn[data-mode="longBreak"].active {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-emerald-light);
+}
+
+/* Circular Timer */
+.pomo-timer-container {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto var(--space-xl);
+}
+
+.pomo-timer-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.pomo-timer-bg {
+  stroke: rgba(255, 255, 255, 0.06);
+}
+
+.pomo-timer-progress {
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.pomo-timer-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.pomo-timer-time {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.pomo-timer-label {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* Controls */
+.pomo-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.pomo-play-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: var(--gradient-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-glow);
+}
+
+.pomo-play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+}
+
+.pomo-play-btn:active {
+  transform: scale(0.95);
+}
+
+.pomo-play-btn.running {
+  background: rgba(244, 63, 94, 0.2);
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.15);
+}
+
+.pomo-play-btn.running:hover {
+  box-shadow: 0 0 30px rgba(244, 63, 94, 0.25);
+}
+
+/* Stats */
+.pomo-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.pomo-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.pomo-stat svg {
+  color: var(--accent-amber);
+}
+
+.pomo-stat-label {
+  color: var(--text-muted);
+  font-weight: 400;
+}
