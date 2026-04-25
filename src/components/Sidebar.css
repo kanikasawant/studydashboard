@@ -28,6 +28,16 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 
+.sidebar-auth-actions {
+  padding: var(--space-sm) var(--space-lg);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sidebar-logout-primary {
+  width: 100%;
+  justify-content: center;
+}
+
 .sidebar-logo {
   display: flex;
   align-items: center;
@@ -124,6 +134,26 @@
   color: var(--text-muted);
 }
 
+.sidebar-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sidebar-logout:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-violet);
+  background: rgba(255, 255, 255, 0.05);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .sidebar {
@@ -133,6 +163,10 @@
 
   .sidebar-brand-text,
   .sidebar-nav-label {
+    display: none;
+  }
+
+  .sidebar-auth-actions {
     display: none;
   }
 
@@ -166,6 +200,10 @@
 
   .sidebar-brand,
   .sidebar-footer {
+    display: none;
+  }
+
+  .sidebar-auth-actions {
     display: none;
   }
 

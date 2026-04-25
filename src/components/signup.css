@@ -1,0 +1,19 @@
+/* Reuse the core styles from LoginCard.css by importing them */
+/* If you want to differentiate, you can change the logo box or button gradient */
+
+.signup-logo-box {
+  background: rgba(101, 213, 255, 0.1);
+  color: #65d5ff; /* Blue theme for signup */
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.signup-btn {
+  background: linear-gradient(135deg, #00b0ff 0%, #00e5ff 100%);
+  /* Matches your light-blue theme */
+}

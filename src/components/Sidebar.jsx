@@ -1,4 +1,4 @@
-import { CheckSquare, CalendarDays, FileText, Timer, BookOpen, Clock, BarChart3, Calendar, Trophy } from 'lucide-react'
+import { CheckSquare, CalendarDays, FileText, Timer, BookOpen, Clock, BarChart3, Calendar, Trophy, LogOut } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 import './Sidebar.css'
 
@@ -13,7 +13,7 @@ const navItems = [
   { id: 'streak', label: 'Achievements', icon: Trophy },
 ]
 
-function Sidebar({ activeSection, onNavigate, theme, onThemeToggle }) {
+function Sidebar({ activeSection, onNavigate, theme, onThemeToggle, onLogout }) {
   return (
     <aside className="sidebar" id="sidebar">
       <div className="sidebar-brand">
@@ -24,6 +24,13 @@ function Sidebar({ activeSection, onNavigate, theme, onThemeToggle }) {
           <h1>StudyDash</h1>
           <span>Your study companion</span>
         </div>
+      </div>
+
+      <div className="sidebar-auth-actions">
+        <button type="button" className="sidebar-logout sidebar-logout-primary" onClick={onLogout}>
+          <LogOut size={14} />
+          Logout
+        </button>
       </div>
 
       <nav className="sidebar-nav">

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+// Your existing imports
 import Sidebar from './components/Sidebar'
 import QuoteCard from './components/QuoteCard'
 import TodoCard from './components/TodoCard'
@@ -10,11 +11,56 @@ import AnalyticsCard from './components/AnalyticsCard'
 import CalendarCard from './components/CalendarCard'
 import StreakCard from './components/StreakCard'
 
+// New Auth imports
+import LoginCard from './components/logincard'
+import SignupCard from './components/signupcard'
+
+function isValidStoredToken(token) {
+  if (!token || typeof token !== 'string') {
+    return false
+  }
+
+  const parts = token.split('.')
+  if (parts.length !== 3) {
+    return false
+  }
+
+  try {
+    const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/')
+    const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=')
+    const payload = JSON.parse(window.atob(padded))
+
+    if (!payload.exp || typeof payload.exp !== 'number') {
+      return false
+    }
+
+    return payload.exp > Math.floor(Date.now() / 1000)
+  } catch {
+    return false
+  }
+}
+
 function App() {
   const [activeSection, setActiveSection] = useState('todo')
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('studydash_theme') || 'dark'
   })
+
+  // --- NEW AUTH STATE ---
+  const [token, setToken] = useState(() => {
+    const storedToken = sessionStorage.getItem('study_token')
+    if (!storedToken || storedToken === 'undefined' || storedToken === 'null') {
+      return null
+    }
+
+    if (!isValidStoredToken(storedToken)) {
+      sessionStorage.removeItem('study_token')
+      return null
+    }
+
+    return storedToken
+  })
+  const [authMode, setAuthMode] = useState('login') // 'login' or 'signup'
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -25,29 +71,47 @@ function App() {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
   }
 
+  // --- NEW LOGOUT HANDLER ---
+  const handleLogout = () => {
+    sessionStorage.removeItem('study_token')
+    setToken(null)
+    setAuthMode('login')
+  }
+
   const renderActiveSection = () => {
     switch (activeSection) {
-      case 'todo':
-        return <TodoCard />
-      case 'timetable':
-        return <TimetableCard />
-      case 'notes':
-        return <NotesCard />
-      case 'countdown':
-        return <CountdownCard />
-      case 'pomodoro':
-        return <PomodoroCard />
-      case 'analytics':
-        return <AnalyticsCard />
-      case 'calendar':
-        return <CalendarCard />
-      case 'streak':
-        return <StreakCard />
-      default:
-        return <TodoCard />
+      case 'todo': return <TodoCard />
+      case 'timetable': return <TimetableCard />
+      case 'notes': return <NotesCard />
+      case 'countdown': return <CountdownCard />
+      case 'pomodoro': return <PomodoroCard />
+      case 'analytics': return <AnalyticsCard />
+      case 'calendar': return <CalendarCard />
+      case 'streak': return <StreakCard />
+      default: return <TodoCard />
     }
   }
 
+  // --- 1. AUTH CHECK ---
+  // If there is no token, show the Login or Signup card
+  if (!token) {
+    return (
+      <div className="auth-page-wrapper">
+        {authMode === 'login' ? (
+          <LoginCard 
+            onLoginSuccess={(newToken) => setToken(newToken)} 
+            onSwitchToSignup={() => setAuthMode('signup')} 
+          />
+        ) : (
+          <SignupCard 
+            onSwitchToLogin={() => setAuthMode('login')} 
+          />
+        )}
+      </div>
+    )
+  }
+
+  // --- 2. DASHBOARD (Only shown if token exists) ---
   return (
     <div className="app-layout">
       <Sidebar
@@ -55,6 +119,7 @@ function App() {
         onNavigate={setActiveSection}
         theme={theme}
         onThemeToggle={toggleTheme}
+        onLogout={handleLogout}
       />
       <main className="main-content">
         <QuoteCard />

@@ -1,21 +1,42 @@
-# Logs
-logs
-*.log
+# --- React / Node ---
+node_modules/
+dist/
+dist-ssr/
+*.local
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# --- Python Backend ---
+# Excludes the virtual environment regardless of what you named it
+backend/venv/
+backend/.venv/
+venv/
+.venv/
 
-# Editor directories and files
-.vscode/*
+# Excludes compiled Python files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Database ---
+# Keeps your database on your machine, not on the web
+backend/*.db
+backend/*.sqlite3
+*.db
+
+# --- Environment & Secrets ---
+# VERY IMPORTANT: This keeps your SECRET_KEY safe
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- Editor / OS Files ---
+.vscode/
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
