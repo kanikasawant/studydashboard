@@ -12,11 +12,21 @@ import auth
 
 app = FastAPI()
 
-# 1. CORS Setup: This allows your React (Vite) frontend to talk to this Python backend
+# 1. CORS Setup: Allow your deployed Vercel frontend + local dev frontend
+ALLOWED_ORIGINS = [
+    "https://studydashboard-9qmch28l1-sawantkannu024-6643s-projects.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins (Vercel previews, local, etc.)
-    allow_credentials=True,
+    allow_origins=ALLOWED_ORIGINS,
+    # Allow all Vercel preview URLs for this project as they change per deployment.
+    allow_origin_regex=r"https://studydashboard-.*\.vercel\.app",
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
