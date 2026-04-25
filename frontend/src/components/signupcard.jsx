@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Mail, Lock, UserPlus, ArrowRight } from 'lucide-react';
 import './AuthCard.css'; // We'll share a CSS file for both
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api'
+
 function getPasswordIssues(password) {
   const issues = []
   if (password.length < 8) issues.push('8+ characters')
@@ -34,7 +36,7 @@ const SignupCard = ({ onSwitchToLogin }) => {
     }
 
     try {
-      const response = await fetch('https://studydashboard-qheu.onrender.com/signup', {
+      const response = await fetch(`${API_BASE}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

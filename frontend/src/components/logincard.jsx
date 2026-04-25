@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
 import './AuthCard.css';
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api'
+
 const LoginCard = ({ onLoginSuccess, onSwitchToSignup }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +14,7 @@ const LoginCard = ({ onLoginSuccess, onSwitchToSignup }) => {
     setError('');
 
     try {
-      const response = await fetch('https://studydashboard-qheu.onrender.com/login', {
+      const response = await fetch(`${API_BASE}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
