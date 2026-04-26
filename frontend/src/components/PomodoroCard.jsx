@@ -9,26 +9,6 @@ const MODES = {
   longBreak: { label: 'Long Break', duration: 15 * 60, icon: Coffee, color: 'var(--accent-cyan)' },
 }
 
-function playBeep(frequency = 800, duration = 200, count = 3) {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)()
-    for (let i = 0; i < count; i++) {
-      const osc = ctx.createOscillator()
-      const gain = ctx.createGain()
-      osc.connect(gain)
-      gain.connect(ctx.destination)
-      osc.frequency.value = frequency
-      osc.type = 'sine'
-      gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.3)
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.3 + duration / 1000)
-      osc.start(ctx.currentTime + i * 0.3)
-      osc.stop(ctx.currentTime + i * 0.3 + duration / 1000)
-    }
-  } catch (e) {
-    // Audio not supported
-  }
-}
-
 function PomodoroCard() {
   const [mode, setMode] = useState('focus')
   const [timeLeft, setTimeLeft] = useState(MODES.focus.duration)
@@ -36,6 +16,7 @@ function PomodoroCard() {
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [sessions, setSessions] = useLocalStorage('studydash_pomodoro_sessions', [])
   const intervalRef = useRef(null)
+  const audioCtxRef = useRef(null)
 
   const currentMode = MODES[mode]
   const totalDuration = currentMode.duration
@@ -49,11 +30,53 @@ function PomodoroCard() {
     .filter((s) => s.type === 'focus')
     .reduce((sum, s) => sum + s.duration, 0)
 
+  const getAudioContext = useCallback(() => {
+    if (audioCtxRef.current) return audioCtxRef.current
+
+    const AudioCtx = window.AudioContext || window.webkitAudioContext
+    if (!AudioCtx) return null
+
+    audioCtxRef.current = new AudioCtx()
+    return audioCtxRef.current
+  }, [])
+
+  const unlockAudio = useCallback(async () => {
+    const ctx = getAudioContext()
+    if (!ctx) return
+
+    if (ctx.state === 'suspended') {
+      try {
+        await ctx.resume()
+      } catch {
+        // Ignore resume failures; browser will keep audio blocked.
+      }
+    }
+  }, [getAudioContext])
+
+  const playBeep = useCallback((frequency = 800, duration = 200, count = 3) => {
+    const ctx = getAudioContext()
+    if (!ctx || ctx.state === 'suspended') return
+
+    for (let i = 0; i < count; i++) {
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+      osc.frequency.value = frequency
+      osc.type = 'sine'
+      gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.3)
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.3 + duration / 1000)
+      osc.start(ctx.currentTime + i * 0.3)
+      osc.stop(ctx.currentTime + i * 0.3 + duration / 1000)
+    }
+  }, [getAudioContext])
+
   const switchMode = useCallback((newMode) => {
+    unlockAudio()
     setIsRunning(false)
     setMode(newMode)
     setTimeLeft(MODES[newMode].duration)
-  }, [])
+  }, [unlockAudio])
 
   useEffect(() => {
     if (isRunning) {
@@ -94,7 +117,18 @@ function PomodoroCard() {
     return () => clearInterval(intervalRef.current)
   }, [isRunning, mode, soundEnabled, switchMode, todaySessions, setSessions])
 
-  const toggleTimer = () => setIsRunning(!isRunning)
+  useEffect(() => {
+    return () => {
+      if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
+        audioCtxRef.current.close().catch(() => {})
+      }
+    }
+  }, [])
+
+  const toggleTimer = () => {
+    unlockAudio()
+    setIsRunning(!isRunning)
+  }
 
   const resetTimer = () => {
     setIsRunning(false)
