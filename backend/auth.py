@@ -1,4 +1,5 @@
 from passlib.context import CryptContext
+from passlib.exc import UnknownHashError
 from datetime import datetime, timedelta
 from jose import jwt
 
@@ -17,7 +18,12 @@ def hash_password(password: str):
 
 def verify_password(plain_password, hashed_password):
     # FIX: Also truncate here so it matches the hashed version
-    return pwd_context.verify(plain_password[:72], hashed_password)
+    try:
+        return pwd_context.verify(plain_password[:72], hashed_password)
+    except (ValueError, TypeError, UnknownHashError):
+        # Treat malformed or incompatible hashes as invalid credentials
+        # so the API returns 401 instead of a server error.
+        return False
 
 def create_access_token(data: dict):
     to_encode = data.copy()

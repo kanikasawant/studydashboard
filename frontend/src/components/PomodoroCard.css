@@ -159,3 +159,39 @@
   color: var(--text-muted);
   font-weight: 400;
 }
+
+@media (max-width: 600px) {
+  .pomo-modes {
+    margin-bottom: var(--space-lg);
+  }
+
+  .pomo-mode-btn {
+    padding: 8px 10px;
+    font-size: var(--text-xs);
+  }
+
+  .pomo-timer-container {
+    width: 200px;
+    height: 200px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .pomo-timer-time {
+    font-size: 2.5rem;
+  }
+
+  .pomo-controls {
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .pomo-play-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .pomo-stats {
+    gap: var(--space-md);
+    justify-content: space-between;
+  }
+}

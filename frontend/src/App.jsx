@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { BookOpen, LogOut } from 'lucide-react'
 // Your existing imports
 import Sidebar from './components/Sidebar'
 import QuoteCard from './components/QuoteCard'
@@ -14,6 +15,7 @@ import StreakCard from './components/StreakCard'
 // New Auth imports
 import LoginCard from './components/logincard'
 import SignupCard from './components/signupcard'
+import ThemeToggle from './components/ThemeToggle'
 
 function isValidStoredToken(token) {
   if (!token || typeof token !== 'string') {
@@ -122,6 +124,33 @@ function App() {
         onLogout={handleLogout}
       />
       <main className="main-content">
+        <div className="mobile-topbar glass-card" id="mobile-topbar">
+          <div className="mobile-topbar-brand">
+            <div className="mobile-topbar-logo">
+              <BookOpen size={18} />
+            </div>
+            <div className="mobile-topbar-text">
+              <h3>StudyDash</h3>
+              <span>Your study companion</span>
+            </div>
+          </div>
+
+          <div className="mobile-topbar-actions">
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            <span className="mobile-topbar-date">
+              {new Date().toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </span>
+            <button type="button" className="mobile-topbar-logout" onClick={handleLogout}>
+              <LogOut size={14} />
+              Logout
+            </button>
+          </div>
+        </div>
+
         <QuoteCard />
         <div key={activeSection} style={{ animation: 'slideUp 0.4s ease' }}>
           {renderActiveSection()}

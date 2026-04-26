@@ -51,10 +51,10 @@ function StreakCard() {
   const unlockedBadges = BADGES.filter((b) => b.check(data))
   const lockedBadges = BADGES.filter((b) => !b.check(data))
 
-  // Streak fire visualization (last 14 days)
+  // Streak fire visualization (last 7 days)
   const streakDays = useMemo(() => {
     const days = []
-    for (let i = 13; i >= 0; i--) {
+    for (let i = 6; i >= 0; i--) {
       const d = new Date()
       d.setDate(d.getDate() - i)
       const dayStr = d.toDateString()
@@ -93,7 +93,7 @@ function StreakCard() {
         </div>
       </div>
 
-      {/* Streak Calendar (14 days) */}
+      {/* Streak Calendar (7 days) */}
       <div className="streak-calendar" id="streak-calendar">
         {streakDays.map((d, i) => (
           <div key={i} className={`streak-day ${d.active ? 'active' : ''}`} title={`Day ${d.date}`}>
