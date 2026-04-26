@@ -26,7 +26,7 @@ app.add_middleware(
     allow_origins=ALLOWED_ORIGINS,
     # Allow all Vercel preview URLs for this project as they change per deployment.
     allow_origin_regex=r"https://studydashboard-.*\.vercel\.app",
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
